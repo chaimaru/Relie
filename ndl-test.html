@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDL APIテスト2</title>
+</head>
+<body>
+<button onclick="test1()">① mediatype外してテスト</button>
+<pre id="o1" style="font-size:10px;word-break:break-all;white-space:pre-wrap;background:#f5f5f5;padding:8px;margin:8px 0"></pre>
+<button onclick="test2()">② キーワード検索でテスト</button>
+<pre id="o2" style="font-size:10px;word-break:break-all;white-space:pre-wrap;background:#f5f5f5;padding:8px;margin:8px 0"></pre>
+<button onclick="test3()">③ any=でテスト</button>
+<pre id="o3" style="font-size:10px;word-break:break-all;white-space:pre-wrap;background:#f5f5f5;padding:8px;margin:8px 0"></pre>
+<script>
+async function test1() {
+  const o = document.getElementById('o1');
+  o.textContent = '検索中…';
+  try {
+    const q = encodeURIComponent('思考の整理学');
+    const res = await fetch(`https://ndlsearch.ndl.go.jp/api/opensearch?title=${q}&cnt=5`);
+    o.textContent = (await res.text()).slice(0,2000);
+  } catch(e) { o.textContent = 'エラー:'+e; }
+}
+async function test2() {
+  const o = document.getElementById('o2');
+  o.textContent = '検索中…';
+  try {
+    const q = encodeURIComponent('思考の整理学');
+    const res = await fetch(`https://ndlsearch.ndl.go.jp/api/opensearch?keyword=${q}&cnt=5`);
+    o.textContent = (await res.text()).slice(0,2000);
+  } catch(e) { o.textContent = 'エラー:'+e; }
+}
+async function test3() {
+  const o = document.getElementById('o3');
+  o.textContent = '検索中…';
+  try {
+    const q = encodeURIComponent('思考の整理学');
+    const res = await fetch(`https://ndlsearch.ndl.go.jp/api/opensearch?any=${q}&cnt=5`);
+    o.textContent = (await res.text()).slice(0,2000);
+  } catch(e) { o.textContent = 'エラー:'+e; }
+}
+</script>
+</body>
+</html>
